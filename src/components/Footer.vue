@@ -1,6 +1,6 @@
 <template>
     <section class="footer">
-        <h2 class="footer__title">Footer</h2>
+        <h2 class="footer__title">By Laura Arcidiacono - 2022</h2>
     </section>
 
 </template>
@@ -14,5 +14,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang='scss'>
-
+.footer {
+    width: 100%;
+    background-color: rgb(246, 203, 60);
+    text-align: center;
+}
 </style>
