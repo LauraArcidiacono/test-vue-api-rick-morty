@@ -1,6 +1,12 @@
 <template>
     <section class="filter">
-        <h2 class="filter__title">Filter</h2>
+        <label for="filter">Search your Character:</label>
+            <input
+                class="filter__imput"
+                type="text"
+                name="search"
+                placeholder="Rick..."
+                />
     </section>
 
 </template>
@@ -14,5 +20,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang='scss'>
-
+.filter {
+    margin-left: 2rem;
+    color: white;
+}
+.filter__imput {
+    height: 1.5rem;
+    width: 30rem;
+    font-size: 1rem;
+    margin: 1rem;
+}
 </style>

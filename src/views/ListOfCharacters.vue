@@ -1,6 +1,5 @@
 <template>
-    <section class="listOfCharacters">
-        <h2 class="listOfCharacters__title">Dashboard</h2>
+    <main class="listOfCharacters">
         <Filter />
         <ul class="listOfCharacters__list">
           <li
@@ -8,22 +7,22 @@
           :key="character.id"
           class="list__item">
             <CharacterCard
-              :characterId="character.id"
+              :characterImage="character.image"
               :characterName="character.name"
               :characterStatus="character.status"
               :characterSpecies="character.species"
               :characterLocation="character.location"
-              :characterEpisode="character.episode[1]"
+              :characterEpisode="character.episode[0]"
               />
           </li>
         </ul>
-    </section>
+    </main>
 
 </template>
 
 <script lang='ts'>
 import axios from 'axios';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import CharacterCard from '@/components/CharacterCard.vue';
 import Filter from '@/components/Filter.vue';
 
@@ -36,18 +35,35 @@ export default defineComponent({
 
   setup() {
     const apiData = ref([]);
+    const currentData = ref([]);
+    let apiPage = 1;
 
-    onMounted(async () => {
+    const getCharacters = async (page: number) => {
       try {
+        const thisPage = page;
         const { data } = await axios({
           method: 'GET',
-          url: 'https://rickandmortyapi.com/api/character'
+          url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
         });
-        apiData.value = await data.results;
+        currentData.value = await data.results;
+        apiData.value = [...apiData.value, ...currentData.value];
+        console.log(apiData);
       } catch (error) {
         console.log(error);
       }
-    });
+    };
+    getCharacters(apiPage);
+
+    const handleScroll = () => {
+      if (
+        window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
+      ) {
+        apiPage += 1;
+        getCharacters(apiPage);
+      }
+    };
+
+    window.addEventListener('scroll', () => handleScroll());
 
     return {
       apiData
@@ -57,5 +73,27 @@ export default defineComponent({
 </script>
 
 <style scoped lang='scss'>
+.listOfCharacters {
+  width: 100%;
+  background-color: rgb(36, 40, 47);
+}
+ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+li {
+  width: 50%;
+}
 
+@media (min-width: 1200px) {
+ul {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+}
 </style>
