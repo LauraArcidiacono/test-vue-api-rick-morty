@@ -1,37 +1,52 @@
 <template>
-    <section class="characterCard">
+    <article class="characterCard">
         <div class="characterCard__image">
-            <img :src="characterImage" alt="Image of the character" class="image__image">
+            <img :src="theCharacterImage" alt="Image of the character" class="image__image">
         </div>
-        <h2 class="characterCard__character">{{name}}</h2>
-        <p class="character__status">{{status}}</p>
-        <p class="character__species">{{species}}</p>
-        <h4 class="characterCard_info">Last known location</h4>
-        <h3 class="info_item">{{location.name}}</h3>
-        <h4 class="characterCard_info">First seen in:</h4>
-        <h3 class="info_item">{{episode}}</h3>
-    </section>
+          <div class="character__data">
+            <h2 class="data__character">{{name}}</h2>
+            <p class="character__basics">
+              <i :class="status" class="fas fa-circle"></i>
+              {{status}} - {{species}}
+              </p>
+            <h4 class="data_info">Last known location</h4>
+            <h3 class="info_item">{{location.name}}</h3>
+            <h4 class="data_info">First seen in:</h4>
+            <h3 class="info_item">{{episode}}</h3>
+        </div>
+    </article>
 
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue';
+import axios from 'axios';
+import { defineComponent, ref, onMounted } from 'vue';
 
 export default defineComponent({
   name: 'CharacterCard',
-  props: ['characterId', 'characterName', 'characterStatus', 'characterSpecies', 'characterLocation', 'characterEpisode'],
+  props: ['characterImage', 'characterName', 'characterStatus', 'characterSpecies', 'characterLocation', 'characterEpisode'],
   setup(props) {
-    const characterId = ref(props.characterId);
+    const theCharacterImage = ref(props.characterImage);
     const name = ref(props.characterName);
     const status = ref(props.characterStatus);
     const species = ref(props.characterSpecies);
     const location = ref(props.characterLocation);
     const episode = ref(props.characterEpisode);
 
-    const characterImage = ref(`https://rickandmortyapi.com/api/character/avatar/${characterId.value}.jpeg`);
+    onMounted(async () => {
+      try {
+        const { data } = await axios({
+          method: 'GET',
+          url: episode.value
+        });
+        episode.value = await data.name;
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
     return {
-      characterImage,
+      theCharacterImage,
       name,
       status,
       species,
@@ -44,6 +59,45 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .characterCard {
-    border: solid 0.1rem black
+  display: flex;
+  align-items: center;
+  border-radius: 1rem;
+  color: white;
+  background-color: rgb(60, 62, 68);
+  margin: 1rem;
+  min-width: 30%;
+  height: 15rem;
+}
+li {
+  min-width: 40%;
+}
+.characterCard__image {
+  height: 100%;
+}
+.image__image {
+  height: 100%;
+  border-radius: 1rem 0 0 1rem;
+}
+h2, h4 {
+  margin: 0.2rem 0.2rem 0.2rem 0.4rem;
+}
+
+h3, p {
+  margin: 0.4rem;
+}
+h4 {
+  color: lightgray;
+}
+.Dead {
+  font-size: 0.7rem;
+  color:red;
+}
+.Alive {
+  font-size: 0.7rem;
+  color:rgb(23, 211, 23);
+}
+.unknown {
+  font-size: 0.7rem;
+  color: grey;
 }
 </style>
