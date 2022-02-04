@@ -1,10 +1,9 @@
 <template>
-  <div id="nav">
+  <div>
     <Header />
     <ListOfCharacters />
     <Footer />
   </div>
-  <router-view/>
 </template>
 
 <script lang='ts'>
@@ -24,26 +23,24 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang='scss'>
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style lang='scss'>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+body {
+  min-height: 100vh;
+}
+h2 {
+  font-size: 1.5rem
+}
+h3 {
+  font-size: 1.3rem
+}
+h4 {
+  font-size: 1rem
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
