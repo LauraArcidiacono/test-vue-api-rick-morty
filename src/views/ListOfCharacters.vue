@@ -81,11 +81,19 @@ ul {
   list-style-type: none;
   padding-inline-start: 0;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  column-count: 3;
   justify-content: center;
 }
 li {
-  width: 30%;
+  width: 50%;
+}
+
+@media (min-width: 1200px) {
+ul {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 }
 </style>

@@ -65,11 +65,8 @@ export default defineComponent({
   color: white;
   background-color: rgb(60, 62, 68);
   margin: 1rem;
-  min-width: 30%;
+  min-width: 100%;
   height: 15rem;
-}
-li {
-  min-width: 40%;
 }
 .characterCard__image {
   height: 100%;
@@ -99,5 +96,12 @@ h4 {
 .unknown {
   font-size: 0.7rem;
   color: grey;
+}
+
+@media (min-width: 1200px) {
+  .characterCard {
+    min-width: 30%;
+    height: 15rem;
+}
 }
 </style>
