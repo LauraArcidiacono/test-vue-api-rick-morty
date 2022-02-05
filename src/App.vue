@@ -33,14 +33,5 @@ export default defineComponent({
 body {
   min-height: 100vh;
 }
-h2 {
-  font-size: 1.5rem
-}
-h3 {
-  font-size: 1.3rem
-}
-h4 {
-  font-size: 1rem
-}
 
 </style>

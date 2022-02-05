@@ -3,9 +3,10 @@
         <Filter />
         <ul class="listOfCharacters__list">
           <li
-          v-for="character in apiData"
-          :key="character.id"
-          class="list__item">
+            v-for="character in apiData"
+            :key="character.id"
+            class="list__item"
+          >
             <CharacterCard
               :characterImage="character.image"
               :characterName="character.name"
@@ -37,6 +38,7 @@ export default defineComponent({
     const apiData = ref([]);
     const currentData = ref([]);
     let apiPage = 1;
+    const maxPagesAvailableOnApi = 42;
 
     const getCharacters = async (page: number) => {
       try {
@@ -55,8 +57,8 @@ export default defineComponent({
     getCharacters(apiPage);
 
     const handleScroll = () => {
-      if (
-        window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
+      if (apiPage <= maxPagesAvailableOnApi
+      && window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
       ) {
         apiPage += 1;
         getCharacters(apiPage);
@@ -74,26 +76,33 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .listOfCharacters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   background-color: rgb(36, 40, 47);
 }
 ul {
   list-style-type: none;
-  padding-inline-start: 0;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 li {
-  width: 50%;
+  width: 85%;
+  min-width: 380px;
+  margin: 0.5rem;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 400px) {
 ul {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+}
+li {
+  width: 30%;
 }
 }
 </style>
