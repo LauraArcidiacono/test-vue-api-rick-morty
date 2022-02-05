@@ -26,7 +26,7 @@ export default defineComponent({
 }
 .filter__imput {
     height: 1.5rem;
-    width: 30rem;
+    width: 30vw;
     font-size: 1rem;
     margin: 1rem;
 }
