@@ -1,6 +1,12 @@
 <template>
     <section class="footer">
-        <h2 class="footer__title">By Laura Arcidiacono - 2022</h2>
+        <div class="footer__image">
+            <img
+                src="../assets/footer.webp"
+                alt="Image of Rick, Morty and other characters"
+                class="image__image"
+            />
+        </div>
     </section>
 
 </template>
@@ -16,7 +22,15 @@ export default defineComponent({
 <style scoped lang='scss'>
 .footer {
     width: 100%;
-    background-color: rgb(246, 203, 60);
-    text-align: center;
+}
+h1 {
+    display: none;
+}
+.footer__image {
+    width: 100%;
+    font-size: 0;
+}
+.image__image {
+    width: 100%;
 }
 </style>
