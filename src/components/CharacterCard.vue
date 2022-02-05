@@ -3,16 +3,16 @@
         <div class="characterCard__image">
             <img :src="theCharacterImage" alt="Image of the character" class="image__image">
         </div>
-          <div class="character__data">
-            <h2 class="data__character">{{name}}</h2>
-            <p class="character__basics">
-              <i :class="status" class="fas fa-circle"></i>
-              {{status}} - {{species}}
-              </p>
-            <h4 class="data_info">Last known location</h4>
-            <h3 class="info_item">{{location.name}}</h3>
-            <h4 class="data_info">First seen in:</h4>
-            <h3 class="info_item">{{episode}}</h3>
+        <div class="character__data">
+          <h2 class="data__character">{{name}}</h2>
+          <p class="character__basics">
+            <i :class="status" class="fas fa-circle"></i>
+            {{status}} - {{species}}
+            </p>
+          <h4 class="data_info">Last known location</h4>
+          <h3 class="info_item">{{location.name}}</h3>
+          <h4 class="data_info">First seen in:</h4>
+          <h3 class="info_item">{{episode}}</h3>
         </div>
     </article>
 
@@ -66,14 +66,17 @@ export default defineComponent({
   background-color: rgb(60, 62, 68);
   margin: 1rem;
   min-width: 100%;
-  height: 15rem;
+  height: 18vh;
 }
 .characterCard__image {
-  height: 100%;
+  width: 25%;
 }
 .image__image {
-  height: 100%;
+  width: 100%;
   border-radius: 1rem 0 0 1rem;
+}
+.character__data {
+  width: 75%;
 }
 h2, h4 {
   margin: 0.2rem 0.2rem 0.2rem 0.4rem;
@@ -85,23 +88,37 @@ h3, p {
 h4 {
   color: lightgray;
 }
+h2 {
+  font-size: 1.4rem;
+}
+h3 {
+  font-size: 1rem;
+}
+h4, p, .Dead, .Alive, .unknown{
+  font-size: 0.65rem;
+}
 .Dead {
-  font-size: 0.7rem;
   color:red;
 }
 .Alive {
-  font-size: 0.7rem;
   color:rgb(23, 211, 23);
 }
 .unknown {
-  font-size: 0.7rem;
   color: grey;
 }
 
 @media (min-width: 1200px) {
   .characterCard {
     min-width: 30%;
-    height: 15rem;
+    height: auto;
 }
+.characterCard__image {
+  width: 40%;
+}
+.image__image {
+  width: 100%;
+  border-radius: 1rem 0 0 1rem;
+}
+
 }
 </style>
