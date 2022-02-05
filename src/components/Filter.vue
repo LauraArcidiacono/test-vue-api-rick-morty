@@ -2,10 +2,10 @@
     <section class="filter">
         <label for="filter">Search your Character:</label>
             <input
-                class="filter__imput"
+                class="filter__input"
                 type="text"
                 name="search"
-                placeholder="Rick..."
+                placeholder="Comming soon... :-)"
                 />
     </section>
 
@@ -21,13 +21,27 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .filter {
-    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
     color: white;
 }
-.filter__imput {
+.filter__input {
     height: 1.5rem;
-    width: 30vw;
+    width: 100%;
     font-size: 1rem;
-    margin: 1rem;
+    margin-top: 1rem;
+}
+label {
+    width: 15rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+@media (min-width:500px){
+.filter {
+    flex-direction: row;
+    width: 70%;
+}
 }
 </style>
