@@ -3,9 +3,10 @@
         <Filter />
         <ul class="listOfCharacters__list">
           <li
-          v-for="character in apiData"
-          :key="character.id"
-          class="list__item">
+            v-for="character in apiData"
+            :key="character.id"
+            class="list__item"
+          >
             <CharacterCard
               :characterImage="character.image"
               :characterName="character.name"
@@ -85,15 +86,16 @@ ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
 }
 li {
-  width: 80%;
+  width: 85%;
+  min-width: 380px;
   margin: 0.5rem;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 400px) {
 ul {
   flex-direction: row;
   flex-wrap: wrap;
