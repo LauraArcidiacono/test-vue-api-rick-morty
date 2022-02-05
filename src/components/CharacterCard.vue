@@ -1,19 +1,19 @@
 <template>
     <article class="characterCard">
-        <div class="characterCard__image">
-            <img :src="theCharacterImage" alt="Image of the character" class="image__image">
-        </div>
-        <div class="character__data">
-          <h2 class="data__character">{{name}}</h2>
-          <p class="character__basics">
-            <i :class="status" class="fas fa-circle"></i>
-            {{status}} - {{species}}
-            </p>
-          <h4 class="data_info">Last known location</h4>
-          <h3 class="info_item">{{location.name}}</h3>
-          <h4 class="data_info">First seen in:</h4>
-          <h3 class="info_item">{{episode}}</h3>
-        </div>
+      <div class="characterCard__image">
+        <img :src="theCharacterImage" :alt="`Image of ${name}`" class="image__image">
+      </div>
+      <div class="character__data">
+        <h2 class="data__character">{{name}}</h2>
+        <p class="character__basics">
+          <i :class="status" class="fas fa-circle"></i>
+          {{status}} - {{species}}
+          </p>
+        <h4 class="data_info">Last known location</h4>
+        <h3 class="info_item">{{location.name}}</h3>
+        <h4 class="data_info">First seen in:</h4>
+        <h3 class="info_item">{{episode}}</h3>
+      </div>
     </article>
 
 </template>
@@ -63,20 +63,25 @@ export default defineComponent({
   align-items: center;
   border-radius: 1rem;
   color: white;
-  background-color: rgb(60, 62, 68);
+  background-color: rgb(69, 98, 117);
   margin: 1rem;
-  min-width: 100%;
-  height: 18vh;
+  height: auto;
+
 }
 .characterCard__image {
-  width: 25%;
+  width: 35%;
+  min-height: 10.35rem;
+  min-width: 35%;
+  display: flex;
 }
 .image__image {
   width: 100%;
   border-radius: 1rem 0 0 1rem;
+  object-fit: cover;
 }
 .character__data {
-  width: 75%;
+  min-height: 10.35rem;
+  width: 100%;
 }
 h2, h4 {
   margin: 0.2rem 0.2rem 0.2rem 0.4rem;
@@ -105,20 +110,5 @@ h4, p, .Dead, .Alive, .unknown{
 }
 .unknown {
   color: grey;
-}
-
-@media (min-width: 1200px) {
-  .characterCard {
-    min-width: 30%;
-    height: auto;
-}
-.characterCard__image {
-  width: 40%;
-}
-.image__image {
-  width: 100%;
-  border-radius: 1rem 0 0 1rem;
-}
-
 }
 </style>
