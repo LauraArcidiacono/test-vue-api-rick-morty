@@ -37,6 +37,7 @@ export default defineComponent({
     const apiData = ref([]);
     const currentData = ref([]);
     let apiPage = 1;
+    const maxPagesAvailableOnApi = 42;
 
     const getCharacters = async (page: number) => {
       try {
@@ -55,8 +56,8 @@ export default defineComponent({
     getCharacters(apiPage);
 
     const handleScroll = () => {
-      if (
-        window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
+      if (apiPage <= maxPagesAvailableOnApi
+      && window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
       ) {
         apiPage += 1;
         getCharacters(apiPage);
@@ -74,26 +75,32 @@ export default defineComponent({
 
 <style scoped lang='scss'>
 .listOfCharacters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   background-color: rgb(36, 40, 47);
 }
 ul {
   list-style-type: none;
-  padding-inline-start: 0;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
 }
 li {
-  width: 50%;
+  width: 80%;
+  margin: 0.5rem;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 800px) {
 ul {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+}
+li {
+  width: 30%;
 }
 }
 </style>
