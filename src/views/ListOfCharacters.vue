@@ -1,7 +1,7 @@
 <template>
     <main class="listOfCharacters">
         <Filter
-
+          :functionGetCharacters="getCharacters"
         />
         <ul class="listOfCharacters__list">
           <li
@@ -41,38 +41,47 @@ export default defineComponent({
     const currentData = ref([]);
     let apiPage = 1;
     const maxPagesAvailableOnApi = 42;
+    let currentKey = '';
+    let currentValue = '';
 
+    // TODO: move the logic to diferents modules and then import it here to use it
     const getCharacters = async (page: number, key = '', value = '') => {
       try {
         const thisPage = page;
-        if (key === '' && value === '') {
+        if (page === 1) {
+          apiData.value = [];
+        }
+        if (key === '' || value === '') {
           const { data } = await axios({
             method: 'GET',
             url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
           });
           currentData.value = await data.results;
           apiData.value = [...apiData.value, ...currentData.value];
+        } else {
+          currentKey = key;
+          currentValue = value;
+          const { data } = await axios({
+            method: 'GET',
+            url: `https://rickandmortyapi.com/api/character/?page=${thisPage}&${key}=${value}`
+          });
+          currentData.value = await data.results;
+          apiData.value = [...apiData.value, ...currentData.value];
         }
-        // // eslint-disable-next-line no-alert
-        // window.alert('no hay ningun filtro');
-        // // const { data } = await axios({
-        // //   method: 'GET',
-        // //   url: `https://rickandmortyapi.com/api/character/?${key} = ${value}`
-        // // });
-        // // currentData.value = await data.results;
-        // // apiData.value = [...apiData.value, ...currentData.value];
       } catch (error) {
         console.log(error);
       }
     };
     getCharacters(apiPage);
 
+    // TODO optimize function handleScroll to evoit make request when there is no more
+    // pages on the api, user 404 message to do it?
     const handleScroll = () => {
       if (apiPage <= maxPagesAvailableOnApi
       && window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
       ) {
         apiPage += 1;
-        getCharacters(apiPage);
+        getCharacters(apiPage, currentKey, currentValue);
       }
     };
 
