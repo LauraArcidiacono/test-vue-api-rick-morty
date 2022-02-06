@@ -4,8 +4,10 @@
             <input
                 class="filter__input"
                 type="text"
-                name="search"
+                name="customFilter"
                 placeholder="Comming soon... :-)"
+                v-model.trim="inputData"
+                v-on:input="customFilter(inputData)"
                 />
     </section>
 
@@ -15,7 +17,25 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  name: 'Filter',
 
+  setup() {
+    const inputData = '';
+
+    const customFilter = (valueInput: string) => {
+      const stringFromInput = valueInput.toLowerCase().replace(/[^a-z:\s]/g, '');
+      const arrayKeyValue = stringFromInput.split(':');
+      return arrayKeyValue;
+    };
+
+    const [key, value] = customFilter(inputData);
+    console.log('key value: ', key, value);
+
+    return {
+      inputData,
+      customFilter
+    };
+  }
 });
 </script>
 
