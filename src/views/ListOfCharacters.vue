@@ -1,6 +1,8 @@
 <template>
     <main class="listOfCharacters">
-        <Filter />
+        <Filter
+
+        />
         <ul class="listOfCharacters__list">
           <li
             v-for="character in apiData"
@@ -14,7 +16,7 @@
               :characterSpecies="character.species"
               :characterLocation="character.location"
               :characterEpisode="character.episode[0]"
-              />
+            />
           </li>
         </ul>
     </main>
@@ -40,16 +42,25 @@ export default defineComponent({
     let apiPage = 1;
     const maxPagesAvailableOnApi = 42;
 
-    const getCharacters = async (page: number) => {
+    const getCharacters = async (page: number, key = '', value = '') => {
       try {
         const thisPage = page;
-        const { data } = await axios({
-          method: 'GET',
-          url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
-        });
-        currentData.value = await data.results;
-        apiData.value = [...apiData.value, ...currentData.value];
-        console.log(apiData);
+        if (key === '' && value === '') {
+          const { data } = await axios({
+            method: 'GET',
+            url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
+          });
+          currentData.value = await data.results;
+          apiData.value = [...apiData.value, ...currentData.value];
+        }
+        // // eslint-disable-next-line no-alert
+        // window.alert('no hay ningun filtro');
+        // // const { data } = await axios({
+        // //   method: 'GET',
+        // //   url: `https://rickandmortyapi.com/api/character/?${key} = ${value}`
+        // // });
+        // // currentData.value = await data.results;
+        // // apiData.value = [...apiData.value, ...currentData.value];
       } catch (error) {
         console.log(error);
       }
@@ -68,7 +79,8 @@ export default defineComponent({
     window.addEventListener('scroll', () => handleScroll());
 
     return {
-      apiData
+      apiData,
+      getCharacters
     };
   }
 });
