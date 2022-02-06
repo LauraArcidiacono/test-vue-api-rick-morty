@@ -14,22 +14,24 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'Filter',
-
-  setup() {
+  props: ['functionGetCharacters'],
+  setup(props) {
     const inputData = '';
+    const getCharacters = ref(props.functionGetCharacters);
+    const filterKeys = ['name', 'status'];
 
     const customFilter = (valueInput: string) => {
       const stringFromInput = valueInput.toLowerCase().replace(/[^a-z:\s]/g, '');
-      const arrayKeyValue = stringFromInput.split(':');
-      return arrayKeyValue;
+      const resultData = ref(stringFromInput.split(':'));
+      const [key, value] = resultData.value;
+      if (filterKeys.includes(key) && value !== undefined) {
+        getCharacters.value(1, key, value);
+      }
     };
-
-    const [key, value] = customFilter(inputData);
-    console.log('key value: ', key, value);
 
     return {
       inputData,
