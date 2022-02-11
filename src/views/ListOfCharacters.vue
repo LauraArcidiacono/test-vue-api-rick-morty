@@ -41,11 +41,11 @@ export default defineComponent({
     const maxPagesAvailableOnApi = 42;
 
     const getCharacters = async (page: number) => {
+      // movería esta lógica a un repository (repository pattern)
       try {
-        const thisPage = page;
         const { data } = await axios({
           method: 'GET',
-          url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
+          url: `https://rickandmortyapi.com/api/character/?page=${page}`
         });
         currentData.value = await data.results;
         apiData.value = [...apiData.value, ...currentData.value];
