@@ -26,6 +26,7 @@ export default defineComponent({
   name: 'CharacterCard',
   props: ['characterImage', 'characterName', 'characterStatus', 'characterSpecies', 'characterLocation', 'characterEpisode'],
   setup(props) {
+    // quizas esto lo puedas mover a una interfaz y que reciba por prop una interfaz en vez de cada una de las props
     const theCharacterImage = ref(props.characterImage);
     const name = ref(props.characterName);
     const status = ref(props.characterStatus);
@@ -34,6 +35,8 @@ export default defineComponent({
     const episode = ref(props.characterEpisode);
 
     onMounted(async () => {
+      // no esto seguro si esto lo pedí pero de no ser así evitaría hacer una request por cada card
+      // el performance te lo cargas
       try {
         const { data } = await axios({
           method: 'GET',
