@@ -5,7 +5,7 @@
                 class="filter__input"
                 type="text"
                 name="customFilter"
-                placeholder="Comming soon... :-)"
+                placeholder="name:morty"
                 v-model.trim="inputData"
                 v-on:input="customFilter(inputData)"
                 />
