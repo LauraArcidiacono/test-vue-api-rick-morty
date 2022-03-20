@@ -1,6 +1,8 @@
 <template>
     <main class="listOfCharacters">
-        <Filter />
+        <Filter
+          :functionGetCharacters="getCharacters"
+        />
         <ul class="listOfCharacters__list">
           <li
             v-for="character in apiData"
@@ -14,7 +16,7 @@
               :characterSpecies="character.species"
               :characterLocation="character.location"
               :characterEpisode="character.episode[0]"
-              />
+            />
           </li>
         </ul>
     </main>
@@ -39,36 +41,55 @@ export default defineComponent({
     const currentData = ref([]);
     let apiPage = 1;
     const maxPagesAvailableOnApi = 42;
+    let currentKey = '';
+    let currentValue = '';
 
-    const getCharacters = async (page: number) => {
+    // TODO: move the logic to diferents modules and then import it here to use it
+    const getCharacters = async (page: number, key = '', value = '') => {
       try {
         const thisPage = page;
-        const { data } = await axios({
-          method: 'GET',
-          url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
-        });
-        currentData.value = await data.results;
-        apiData.value = [...apiData.value, ...currentData.value];
-        console.log(apiData);
+        if (page === 1) {
+          apiData.value = [];
+        }
+        if (key === '' || value === '') {
+          const { data } = await axios({
+            method: 'GET',
+            url: `https://rickandmortyapi.com/api/character/?page=${thisPage}`
+          });
+          currentData.value = await data.results;
+          apiData.value = [...apiData.value, ...currentData.value];
+        } else {
+          currentKey = key;
+          currentValue = value;
+          const { data } = await axios({
+            method: 'GET',
+            url: `https://rickandmortyapi.com/api/character/?page=${thisPage}&${key}=${value}`
+          });
+          currentData.value = await data.results;
+          apiData.value = [...apiData.value, ...currentData.value];
+        }
       } catch (error) {
         console.log(error);
       }
     };
     getCharacters(apiPage);
 
+    // TODO optimize function handleScroll to evoit make request when there is no more
+    // pages on the api, user 404 message to do it?
     const handleScroll = () => {
       if (apiPage <= maxPagesAvailableOnApi
       && window.scrollY + window.innerHeight >= document.body.scrollHeight - 60
       ) {
         apiPage += 1;
-        getCharacters(apiPage);
+        getCharacters(apiPage, currentKey, currentValue);
       }
     };
 
     window.addEventListener('scroll', () => handleScroll());
 
     return {
-      apiData
+      apiData,
+      getCharacters
     };
   }
 });

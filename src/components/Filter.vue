@@ -4,18 +4,40 @@
             <input
                 class="filter__input"
                 type="text"
-                name="search"
-                placeholder="Comming soon... :-)"
+                name="customFilter"
+                placeholder="name:morty"
+                v-model.trim="inputData"
+                v-on:input="customFilter(inputData)"
                 />
     </section>
 
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
+  name: 'Filter',
+  props: ['functionGetCharacters'],
+  setup(props) {
+    const inputData = '';
+    const getCharacters = ref(props.functionGetCharacters);
+    const filterKeys = ['name', 'status'];
 
+    const customFilter = (valueInput: string) => {
+      const stringFromInput = valueInput.toLowerCase().replace(/[^a-z:\s]/g, '');
+      const resultData = ref(stringFromInput.split(':'));
+      const [key, value] = resultData.value;
+      if (filterKeys.includes(key) && value !== undefined) {
+        getCharacters.value(1, key, value);
+      }
+    };
+
+    return {
+      inputData,
+      customFilter
+    };
+  }
 });
 </script>
 
