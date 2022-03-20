@@ -359,3 +359,6 @@ auth-data.js
 
 /.expo
 .expo/
+
+# api.dev.http
+api.dev.http
